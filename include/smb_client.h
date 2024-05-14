@@ -16,7 +16,7 @@ class smb_client
         smb_client& operator=(const smb_client&) = delete;
         ~smb_client();
 
-        void connect(std::string domain, std::string username, std::string password);
+        int connect(std::string domain, std::string username, std::string password);
 
         const std::string&  get_server();
         const int           get_port();

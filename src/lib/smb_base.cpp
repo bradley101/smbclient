@@ -6,6 +6,8 @@
 
 smb2_sync_header* create_new_smb2_sync_header()
 {
+    auto header = new smb2_sync_header;
+
     return nullptr;
 }
 
