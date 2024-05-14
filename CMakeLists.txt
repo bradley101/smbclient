@@ -8,4 +8,8 @@ add_library(smbclient SHARED library.cpp
         include/smb_commands.h
         include/defines.h
         include/smb_negotiate.h
-        include/smb_negotiate_contexts.h)
+        include/smb_negotiate_contexts.h
+        src/lib/smb_negotiate.cpp
+        src/lib/smb_base.cpp
+        include/smb_client.h
+        src/lib/smb_client.cpp)

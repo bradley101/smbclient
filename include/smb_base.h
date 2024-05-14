@@ -10,7 +10,8 @@
 constexpr byte4 SMB2_PROTOCOL_ID = 0x424D53FE;
 constexpr byte2 SMB2_SYNC_HEADER_STRUCTURE_SIZE = 64;
 
-enum smb2_header_flags {
+enum smb2_header_flags
+{
     SMB2_FLAGS_SERVER_TO_REDIR      = 0x00000001,
     SMB2_FLAGS_ASYNC_COMMAND        = 0x00000002,
     SMB2_FLAGS_RELATED_OPERATIONS   = 0x00000004,
@@ -20,7 +21,8 @@ enum smb2_header_flags {
     SMB2_FLAGS_REPLAY_OPERATION     = 0x20000000
 };
 
-struct smb2_sync_header {
+struct smb2_sync_header
+{
     byte4 protocol_id = SMB2_PROTOCOL_ID;
     byte2 structure_size = SMB2_SYNC_HEADER_STRUCTURE_SIZE;
     byte2 credit_charge;
@@ -36,5 +38,7 @@ struct smb2_sync_header {
     byte8 session_id;
     byte8 signature[2];
 };
+
+struct smb2_sync_header * create_new_smb2_sync_header();
 
 #endif //SMBCLIENT_SMB_BASE_H

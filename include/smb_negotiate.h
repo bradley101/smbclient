@@ -6,15 +6,18 @@
 #define SMBCLIENT_SMB_NEGOTIATE_H
 
 #include "smb_base.h"
+#include "smb_negotiate_contexts.h"
 
 constexpr byte2 SMB2_NEGOTIATE_REQ_STRUCTURE_SIZE = 36;
 
-enum smb2_security_modes {
+enum smb2_security_modes
+{
     SMB2_NEGOTIATE_SIGNING_ENABLED  = 0x0001,
     SMB2_NEGOTIATE_SIGNING_REQUIRED = 0x0002
 };
 
-enum smb2_capabilities {
+enum smb2_capabilities
+{
     SMB2_GLOBAL_CAP_DFS                 = 0x00000001,
     SMB2_GLOBAL_CAP_LEASING             = 0x00000002,
     SMB2_GLOBAL_CAP_LARGE_MTU           = 0x00000004,
@@ -25,7 +28,8 @@ enum smb2_capabilities {
     SMB2_GLOBAL_CAP_NOTIFICATIONS       = 0x00000080
 };
 
-enum smb2_dialects {
+enum smb2_dialects
+{
     SMB_2_0_2   = 0x0202,
     SMB_2_1     = 0x0210,
     SMB_3_0     = 0x0300,
@@ -33,7 +37,8 @@ enum smb2_dialects {
     SMB_3_1_1   = 0x0311
 };
 
-enum smb2_negotiate_contexts {
+enum smb2_negotiate_contexts
+{
     SMB2_PREAUTH_INTEGRITY_CAPABILITIES = 0x0001,
     SMB2_ENCRYPTION_CAPABILITIES = 0x0002,
     SMB2_COMPRESSION_CAPABILITIES = 0x0003,
@@ -44,7 +49,8 @@ enum smb2_negotiate_contexts {
     SMB2_CONTEXTTYPE_RESERVED = 0x0100
 };
 
-struct smb2_negotiate_request {
+struct smb2_negotiate_request
+{
     struct smb2_sync_header base_header;
 
     byte2 structure_size = SMB2_NEGOTIATE_REQ_STRUCTURE_SIZE;
@@ -59,6 +65,33 @@ struct smb2_negotiate_request {
     byte2 dialects = SMB_3_1_1;
     byte1 *padding;
 
+    struct negotiate_context_list *negotiate_context_list;
+};
+
+struct smb2_negotiate_request * create_new_negotiate_request();
+
+struct smb2_negotiate_response
+{
+    struct smb2_sync_header base_header;
+
+    byte2 structure_size = 65;
+    byte2 security_mode;
+    byte2 dialect_revision;
+    byte2 negotiate_context_count;
+    byte8 server_guid[2];
+    byte4 capabilities;
+    byte4 max_transact_size;
+    byte4 max_read_size;
+    byte4 max_write_size;
+    byte8 system_time;
+    byte8 server_start_time;
+    byte2 security_buffer_offset;
+    byte2 security_buffer_length;
+    byte4 negotiate_context_offset;
+    byte1 *buffer;
+    byte1 *padding;
+
+    struct negotiate_context_list *negotiate_context_list;
 };
 
 
