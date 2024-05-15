@@ -2,10 +2,12 @@
 // Created by Administrator on 14-05-2024.
 //
 
+#include <cstring>
 #include <iostream>
 #include <netdb.h>
-#include <cstring>
+
 #include "../../include/smb_client.h"
+#include "../../include/smb_negotiate.h"
 
 static int create_socket(const char *, const int);
 
@@ -24,8 +26,8 @@ const std::string& smb_client::get_share()
     return m_share;
 }
 
-smb_client::smb_client(const std::string server, const int port, const std::string share)
-    : m_server(server), m_port(port), m_share(share)
+smb_client::smb_client(const std::string& server, const int port, const std::string& share)
+    : m_server(server), m_port(port), m_share(share), m_connection_socket(-1)
 {
 }
 
@@ -34,12 +36,15 @@ smb_client::~smb_client()
 }
 
 
-int smb_client::connect(std::string domain, std::string username, std::string password)
+int smb_client::connect(std::string& domain, std::string& username, std::string password)
 {
-    int connection_socket = create_socket(m_server.c_str(), m_port);
-    if (connection_socket < 0) {
+    m_connection_socket = create_socket(m_server.c_str(), m_port);
+    if (m_connection_socket < 0) {
         return 1;
     }
+
+    auto negotiate_request = create_new_negotiate_request();
+
 
     return 0;
 }

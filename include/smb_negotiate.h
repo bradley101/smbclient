@@ -58,7 +58,7 @@ struct smb2_negotiate_request
     byte2 security_mode = SMB2_NEGOTIATE_SIGNING_ENABLED;
     byte2 reserved = 0;
     byte4 capabilities = SMB2_GLOBAL_CAP_ENCRYPTION;
-    byte8 client_guid[2];
+    byte1 client_guid[16];
     byte4 negotiate_context_offset;
     byte2 negotiate_context_count;
     byte2 reserved2 = 0;
@@ -75,6 +75,7 @@ struct smb2_negotiate_response
     struct smb2_sync_header base_header;
 
     byte2 structure_size = 65;
+    byte2 dialect_count;
     byte2 security_mode;
     byte2 dialect_revision;
     byte2 negotiate_context_count;
