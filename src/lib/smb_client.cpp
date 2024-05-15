@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <netdb.h>
+#include <cstring>
 #include "../../include/smb_client.h"
 
 static int create_socket(const char *, const int);

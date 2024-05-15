@@ -6,6 +6,7 @@
 #define SMB_CLIENT_H
 
 #include <string>
+#include "defines.h"
 
 class smb_client
 {
@@ -26,6 +27,8 @@ class smb_client
         const std::string   m_server;
         const int           m_port;
         const std::string   m_share;
+
+        byte8               m_message_id = 1;
 
 };
 
