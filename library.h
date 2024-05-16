@@ -1,6 +1,0 @@
-#ifndef SMBCLIENT_LIBRARY_H
-#define SMBCLIENT_LIBRARY_H
-
-void hello();
-
-#endif //SMBCLIENT_LIBRARY_H

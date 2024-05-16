@@ -3,7 +3,7 @@ project(smbclient)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_library(smbclient SHARED library.cpp
+add_library(smbclient SHARED
         include/smb_base.h
         include/smb_commands.h
         include/defines.h
@@ -14,4 +14,8 @@ add_library(smbclient SHARED library.cpp
         include/smb_client.h
         src/lib/smb_client.cpp
         src/util/transport.cpp
+        include/transport.h
 )
+
+add_executable(crawler test/crawler.cpp)
+target_link_libraries(crawler smbclient)

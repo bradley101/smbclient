@@ -8,6 +8,7 @@
 
 #include "../../include/smb_client.h"
 #include "../../include/smb_negotiate.h"
+#include "../../include/transport.h"
 
 static int create_socket(const char *, const int);
 
@@ -46,8 +47,12 @@ int smb_client::connect(std::string& domain, std::string& username, std::string 
         return 1;
     }
 
-    auto negotiate_request = create_new_negotiate_request();
-
+    auto negotiate_request_iovecs = create_new_negotiate_request(
+            m_message_id,
+            &m_salt[0],
+            (byte1 *) m_server.c_str(),
+            m_server.size()); // 5 iovecs
+    send(m_connection_socket, negotiate_request_iovecs, 5);
 
     return 0;
 }

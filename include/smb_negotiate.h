@@ -5,6 +5,8 @@
 #ifndef SMBCLIENT_SMB_NEGOTIATE_H
 #define SMBCLIENT_SMB_NEGOTIATE_H
 
+#include <sys/uio.h>
+
 #include "smb_base.h"
 #include "smb_negotiate_contexts.h"
 
@@ -66,7 +68,11 @@ struct smb2_negotiate_request
     byte2 padding;
 } PACKED ;
 
-iovec * create_new_negotiate_request();
+iovec * create_new_negotiate_request(
+        byte8 message_id,
+        byte1 *salt,
+        byte1 *server,
+        byte2 server_len);
 
 struct smb2_negotiate_response
 {

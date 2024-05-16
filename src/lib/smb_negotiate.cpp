@@ -15,8 +15,7 @@ iovec* create_new_smb2_negotiate_request(
         byte8 message_id,
         byte1 *salt,
         byte1 *server,
-        byte2 server_len
-        )
+        byte2 server_len)
 {
     smb2_negotiate_request negotiate_request;
     memset(&negotiate_request, 0, sizeof(smb2_negotiate_request));

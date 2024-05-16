@@ -2,8 +2,9 @@
 // Created by root on 16/5/24.
 //
 
-#include <bits/types/struct_iovec.h>
 #include <sys/socket.h>
+
+#include "../../include/transport.h"
 
 int send_vec(int socket, iovec vec)
 {
@@ -21,5 +22,8 @@ int send_vec(int socket, iovec vec)
 
 int send(int socket, iovec *vec, int num_vec)
 {
-    int sent = 0;
+    for (auto vec_i = 0; vec_i < num_vec; ++vec_i) {
+        send_vec(socket, vec[vec_i]);
+    }
+    return num_vec;
 }
