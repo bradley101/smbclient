@@ -64,11 +64,9 @@ struct smb2_negotiate_request
     byte2 reserved2 = 0;
     byte2 dialects = SMB_3_1_1;
     byte2 padding;
-
-    struct negotiate_context_list *negotiate_context_list;
 } PACKED ;
 
-struct smb2_negotiate_request * create_new_negotiate_request();
+iovec * create_new_negotiate_request();
 
 struct smb2_negotiate_response
 {
@@ -89,10 +87,10 @@ struct smb2_negotiate_response
     byte2 security_buffer_offset;
     byte2 security_buffer_length;
     byte4 negotiate_context_offset;
-    byte1 *buffer;
-    byte1 *padding;
-
-    struct negotiate_context_list *negotiate_context_list;
+//    byte1 *buffer;
+//    byte1 *padding;
+//
+//    struct negotiate_context_list *negotiate_context_list;
 } PACKED ;
 
 #endif //SMBCLIENT_SMB_NEGOTIATE_H

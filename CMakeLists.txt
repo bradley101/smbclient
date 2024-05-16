@@ -12,4 +12,6 @@ add_library(smbclient SHARED library.cpp
         src/lib/smb_negotiate.cpp
         src/lib/smb_base.cpp
         include/smb_client.h
-        src/lib/smb_client.cpp)
+        src/lib/smb_client.cpp
+        src/util/transport.cpp
+)
