@@ -31,7 +31,6 @@ struct negotiate_context_list
     byte2 context_type;
     byte2 data_length;
     byte4 reserved = 0;
-    byte1 *data;
 } PACKED ;
 
 struct SMB2_PREAUTH_INTEGRITY_CAPABILITIES
@@ -39,7 +38,7 @@ struct SMB2_PREAUTH_INTEGRITY_CAPABILITIES
     byte2 hash_algorithm_count = 1;
     byte2 salt_length;
     byte2 hash_algorithms = SHA_512;
-    byte1 salt[64];
+    byte1 salt[32];
 } PACKED ;
 
 struct SMB2_ENCRYPTION_CAPABILITIES

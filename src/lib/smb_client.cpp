@@ -29,6 +29,9 @@ const std::string& smb_client::get_share()
 smb_client::smb_client(const std::string& server, const int port, const std::string& share)
     : m_server(server), m_port(port), m_share(share), m_connection_socket(-1)
 {
+    for (auto byte_idx = 0; byte_idx < 32; ++byte_idx) {
+        m_salt[byte_idx] = rand() % 256;
+    }
 }
 
 smb_client::~smb_client()

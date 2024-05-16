@@ -30,6 +30,7 @@ class smb_client
 
         byte8               m_message_id = 1;
         int                 m_connection_socket;
+        byte1               m_salt[32];
 
 };
 
