@@ -51,7 +51,7 @@ enum smb2_negotiate_contexts
 
 struct smb2_negotiate_request
 {
-    struct smb2_sync_header base_header;
+    struct smb2_sync_header base_header;    // Size = 64 bytes
 
     byte2 structure_size = SMB2_NEGOTIATE_REQ_STRUCTURE_SIZE;
     byte2 dialect_count = 1;
@@ -63,10 +63,10 @@ struct smb2_negotiate_request
     byte2 negotiate_context_count;
     byte2 reserved2 = 0;
     byte2 dialects = SMB_3_1_1;
-    byte1 *padding;
+    byte2 padding;
 
     struct negotiate_context_list *negotiate_context_list;
-};
+} PACKED ;
 
 struct smb2_negotiate_request * create_new_negotiate_request();
 
@@ -93,8 +93,6 @@ struct smb2_negotiate_response
     byte1 *padding;
 
     struct negotiate_context_list *negotiate_context_list;
-};
-
-
+} PACKED ;
 
 #endif //SMBCLIENT_SMB_NEGOTIATE_H

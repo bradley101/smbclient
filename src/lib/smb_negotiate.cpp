@@ -33,12 +33,13 @@ smb2_negotiate_request* create_new_smb2_negotiate_request(
             SMB2_GLOBAL_CAP_DFS |
             SMB2_GLOBAL_CAP_ENCRYPTION;
 
-    for (auto bit_idx = 0 ; bit_idx < 16 ; ++bit_idx) {
-        negotiate_request.client_guid[bit_idx] = rand() % 256;
+    for (auto byte_idx = 0 ; byte_idx < 16 ; ++byte_idx) {
+        negotiate_request.client_guid[byte_idx] = rand() % 256;
     }
 
-
-
+    negotiate_request.negotiate_context_offset = 40;    // no of bytes till the context list is 8-byte aligned
+    negotiate_request.negotiate_context_count = 4;      // no of supported negotiate contexts
+    negotiate_request.dialects = SMB_3_1_1;
 
     return nullptr;
 }

@@ -12,4 +12,6 @@ typedef uint16_t byte2;
 typedef uint32_t byte4;
 typedef uint64_t byte8;
 
+#define PACKED __attribute__((packed))
+
 #endif //SMBCLIENT_DEFINES_H

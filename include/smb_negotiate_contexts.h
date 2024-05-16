@@ -32,7 +32,7 @@ struct negotiate_context_list
     byte2 data_length;
     byte4 reserved = 0;
     byte1 *data;
-};
+} PACKED ;
 
 struct SMB2_PREAUTH_INTEGRITY_CAPABILITIES
 {
@@ -40,20 +40,20 @@ struct SMB2_PREAUTH_INTEGRITY_CAPABILITIES
     byte2 salt_length;
     byte2 hash_algorithms = SHA_512;
     byte1 salt[64];
-};
+} PACKED ;
 
 struct SMB2_ENCRYPTION_CAPABILITIES
 {
     byte2 cipher_count = 1;
     byte2 ciphers = AES_256_GCM;
-};
+} PACKED ;
 
 // SMB2_COMPRESSION_CAPABILITIES -> WIll not implement
 
 struct SMB2_NETNAME_NEGOTIATE_CONTEXT_ID
 {
     byte1 *net_name;
-};
+} PACKED ;
 
 // SMB2_TRANSPORT_CAPABILITIES -> Will not implement
 // SMB2_RDMA_TRANSFORM_CAPABILITIES -> Will not implement
@@ -62,6 +62,6 @@ struct SMB2_SIGNING_CAPABILITIES
 {
     byte2 signing_algorithm_count = 1;
     byte2 signing_algorithm = AES_GMAC;
-};
+} PACKED;
 
 #endif //SMBCLIENT_SMB_NEGOTIATE_CONTEXTS_H

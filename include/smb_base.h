@@ -37,7 +37,7 @@ struct smb2_sync_header
     byte4 tree_id;
     byte8 session_id;
     byte8 signature[2];
-};
+} PACKED ;
 
 struct smb2_sync_header create_new_smb2_sync_header(
         byte2 command,
