@@ -69,10 +69,11 @@ struct smb2_negotiate_request
 } PACKED ;
 
 iovec * create_new_negotiate_request(
-        byte8 message_id,
+        byte8 &message_id,
         byte1 *salt,
         byte1 *server,
-        byte2 server_len);
+        byte2 server_len,
+        byte1 *signature);
 
 struct smb2_negotiate_response
 {

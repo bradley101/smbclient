@@ -11,11 +11,12 @@
 #include "../../include/smb_commands.h"
 #include "../../include/smb_negotiate.h"
 
-iovec* create_new_smb2_negotiate_request(
-        byte8 message_id,
+iovec* create_new_negotiate_request(
+        byte8 &message_id,
         byte1 *salt,
         byte1 *server,
-        byte2 server_len)
+        byte2 server_len,
+        byte1 *signature)
 {
     smb2_negotiate_request negotiate_request;
     memset(&negotiate_request, 0, sizeof(smb2_negotiate_request));
@@ -27,7 +28,7 @@ iovec* create_new_smb2_negotiate_request(
                 message_id,            // message id
                 0,                 // tree id
                 0,              // session id
-                0                // signature
+                signature                // signature
             );
 
     negotiate_request.structure_size = SMB2_NEGOTIATE_REQ_STRUCTURE_SIZE;

@@ -45,6 +45,6 @@ struct smb2_sync_header create_new_smb2_sync_header(
         byte8 &message_id,
         byte4 tree_id,
         byte8 session_id,
-        byte8 signature[2]);
+        byte1 *signature);
 
 #endif //SMBCLIENT_SMB_BASE_H

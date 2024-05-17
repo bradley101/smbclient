@@ -3,6 +3,7 @@
 //
 
 #include <cstring>
+#include <errno.h>
 #include <iostream>
 #include <netdb.h>
 
@@ -33,6 +34,8 @@ smb_client::smb_client(const std::string& server, const int port, const std::str
     for (auto byte_idx = 0; byte_idx < 32; ++byte_idx) {
         m_salt[byte_idx] = rand() % 256;
     }
+
+    memset(m_signature, 0, sizeof(m_signature));
 }
 
 smb_client::~smb_client()
@@ -40,19 +43,40 @@ smb_client::~smb_client()
 }
 
 
-int smb_client::connect(std::string& domain, std::string& username, std::string password)
+int smb_client::connect(const std::string& domain, const std::string& username, std::string password)
 {
     m_connection_socket = create_socket(m_server.c_str(), m_port);
     if (m_connection_socket < 0) {
         return 1;
     }
 
-    auto negotiate_request_iovecs = create_new_negotiate_request(
+    iovec* negotiate_request_iovecs = create_new_negotiate_request(
             m_message_id,
             &m_salt[0],
             (byte1 *) m_server.c_str(),
-            m_server.size()); // 5 iovecs
-    send(m_connection_socket, negotiate_request_iovecs, 5);
+            (byte2) m_server.size(),
+            m_signature); // 5 iovecs
+    try {
+        send(m_connection_socket, negotiate_request_iovecs, 5);
+    } catch (const std::runtime_error& exp) {
+        return 1;
+    }
+
+    smb2_negotiate_response response;
+    memset(&response, 0, sizeof(response));
+
+
+    {
+        int total_recv = 0;
+        while (total_recv < sizeof(response)) {
+            int r = recv(m_connection_socket, (char *) &response + total_recv, sizeof(response) - total_recv, 0);
+            if (r < 0) {
+                std::cerr << "error during receive = " << errno << '\n';
+                exit(1);
+            }
+            total_recv += r;
+        }
+    }
 
     return 0;
 }

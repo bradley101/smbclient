@@ -17,7 +17,7 @@ class smb_client
         smb_client& operator=(const smb_client&) = delete;
         ~smb_client();
 
-        int connect(std::string& domain, std::string& username, std::string password);
+        int connect(const std::string& domain, const std::string& username, std::string password);
 
         const std::string&  get_server();
         const int           get_port();
@@ -31,6 +31,7 @@ class smb_client
         byte8               m_message_id = 1;
         int                 m_connection_socket;
         byte1               m_salt[32];
+        byte1               m_signature[16];
 
 };
 

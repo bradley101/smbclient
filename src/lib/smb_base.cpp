@@ -13,7 +13,7 @@ smb2_sync_header create_new_smb2_sync_header(
         byte8 &message_id,
         byte4 tree_id,
         byte8 session_id,
-        byte8 signature[2])
+        byte1 *signature)
 {
     smb2_sync_header header;
 
@@ -29,7 +29,7 @@ smb2_sync_header create_new_smb2_sync_header(
     header.message_id = message_id++;
     header.tree_id = tree_id;
     header.session_id = session_id;
-    memcpy(header.signature, signature, 2 * sizeof(byte8));
+    memcpy(header.signature, signature, 16);
 
     return header;
 }

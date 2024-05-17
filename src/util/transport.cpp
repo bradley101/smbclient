@@ -3,6 +3,7 @@
 //
 
 #include <sys/socket.h>
+#include <stdexcept>
 
 #include "../../include/transport.h"
 
@@ -12,7 +13,11 @@ int send_vec(int socket, iovec vec)
     while (vec.iov_len > 0)
     {
         int sent = ::send(socket, (char *) vec.iov_base + total_sent, vec.iov_len, 0);
-        // error case not handled
+
+        if (sent < 0) {
+            throw std::runtime_error("Unable to sent through socket");
+        }
+
         total_sent += sent;
         vec.iov_len -= sent;
     }
