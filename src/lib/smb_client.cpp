@@ -56,7 +56,22 @@ int smb_client::connect(const std::string& domain, const std::string& username, 
             (byte1 *) m_server.c_str(),
             (byte2) m_server.size(),
             m_signature); // 5 iovecs
+
+    iovec transport_header;
+    transport_header.iov_len = 4;
+    transport_header.iov_base = operator new(1 + transport_header.iov_len);
+
+    memset(transport_header.iov_base, 0, 1);
+    byte4 total_msg_size = htonl(
+            negotiate_request_iovecs[0].iov_len +
+            negotiate_request_iovecs[1].iov_len +
+            negotiate_request_iovecs[2].iov_len +
+            negotiate_request_iovecs[3].iov_len +
+            negotiate_request_iovecs[4].iov_len);
+    memcpy(transport_header.iov_base + 1, &total_msg_size, 3);
+
     try {
+        send_vec(m_connection_socket, transport_header);
         send(m_connection_socket, negotiate_request_iovecs, 5);
     } catch (const std::runtime_error& exp) {
         return 1;
